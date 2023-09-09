@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Board } from './boards.model';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class BoardsService {
@@ -7,5 +8,16 @@ export class BoardsService {
 
   getAllBoards() {
     return this.boards;
+  }
+
+  createBoard(title: string, description: string) {
+    const board: Board = {
+      id: nanoid(),
+      title,
+      description,
+      status: 'PUBLIC',
+    };
+    this.boards.push(board);
+    return board;
   }
 }
