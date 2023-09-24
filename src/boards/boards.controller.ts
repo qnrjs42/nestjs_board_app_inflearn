@@ -7,9 +7,11 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { BoardStatus } from './board-status';
 import { Board } from './board.entity';
 import { BoardsService } from './boards.service';
@@ -21,6 +23,7 @@ export class BoardsController {
   constructor(private boardsService: BoardsService) {}
 
   @Get()
+  @UseGuards(AuthGuard())
   getAllBoards(): Promise<Board[]> {
     return this.boardsService.getAllBoards();
   }
