@@ -1,3 +1,4 @@
+import { User } from 'src/auth/user.entity';
 import { CustomRepository } from 'src/configs/typeorm.decorator';
 import { DataSource, Repository } from 'typeorm';
 import { Board } from './board.entity';
@@ -9,8 +10,8 @@ export class BoardRepository extends Repository<Board> {
     super(Board, dataSource.createEntityManager());
   }
 
-  async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
-    const board = this.create({ ...createBoardDto, status: 'PUBLIC' });
+  async createBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
+    const board = this.create({ ...createBoardDto, status: 'PUBLIC', user });
     await this.save(board);
     return board;
   }
